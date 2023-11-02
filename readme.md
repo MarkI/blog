@@ -64,5 +64,8 @@ https://miketabor.com/how-to-host-a-static-website-using-aws-s3-and-cloudflare/
 https://lustforge.com/2016/02/27/hosting-hugo-on-aws/
 https://lustforge.com/2016/02/28/deploy-hugo-files-to-s3/
 
-
 Compress images using: https://tinypng.com/
+
+Latest deployment options on AWS:
+2022 - https://dev.to/makendrang/how-to-deploy-website-using-hugo-on-aws-amplify-in-ten-minutes-2bgi
+2020 - https://aws.amazon.com/blogs/devops/agile-website-delivery-with-hugo-and-aws-amplify/
