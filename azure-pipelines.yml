@@ -1,0 +1,44 @@
+pool:
+  name: Hosted VS2017
+  demands: azureps
+
+# specific branch build with batching
+trigger:
+  batch: true
+  branches:
+    include:
+    - master
+    - releases/*
+
+steps:
+- checkout: self
+  submodules: true
+
+- task: giuliovdev.hugo-extension.hugo-build-task.HugoTask@1
+  displayName: 'Hugo generate html files'
+  inputs:
+    destination: public
+
+#- task: AzureCLI@1
+#  displayName: 'Azure CLI '
+#  inputs:
+#    azureSubscription: 'Visual Studio Enterprise'
+#    scriptLocation: inlineScript
+#    inlineScript: |
+#     set resourceGroupName=rg-blog
+#     set storageName=markblog
+#     set location=northeurope
+#     
+#     call az group create --name %resourceGroupName% --location %location%
+#     call az extension add --name storage-preview
+#     call az storage account create -n %storageName% -g %resourceGroupName% -l %location% --sku Standard_LRS --kind StorageV2
+#     call az storage blob service-properties update --account-name %storageName% --static-website --404-document 404.html --index-document index.html
+
+- task: AzureFileCopy@3
+  displayName: 'Copy html files to Azure storage'
+  inputs:
+    SourcePath: public
+    azureSubscription: 'Visual Studio Enterprise'
+    Destination: AzureBlob
+    storage: markblog
+    ContainerName: '$web'
